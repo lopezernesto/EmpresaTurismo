@@ -3,7 +3,7 @@
 empresa:= EmpresaTurismo crear.
 Contrato inicializarNroContrato .
 "-----Fechas-----"
-f1:= '2024-07-24' asDate.
+f1:= '2025-07-24' asDate.
 f2:=f1 addDays: 7.
 "------------Creo los clientes------------"
 clienteA := Cliente crear: '92812314' ape: 'Lopez' city: 'Cipolletti' correo: 'uncorreo@poo.com' tel: '2991' pref: nil.
@@ -26,13 +26,13 @@ f4 := '2023-01-22' asDate. "Jornada vieja para el ClienteB (Frecuente)"
 viajeOr1 nuevaJornada: f4.
 
 "Especial"
-fe_salida:='2024-08-24' asDate.
+fe_salida:='2025-08-24' asDate.
 fe_vuelta := fe_salida addDays: 7.
 viajeEsp1 := Especial crear: 'Isla Jordan' f_salida: fe_salida ciudad: 'Cipolletti' f_vuelta: fe_vuelta  imp: 50 costo: 300 cantPersonas: 20.
 
 empresa agregarViaje: viajeEsp1 . empresa agregarViaje: viajeOr1.
 "-------Creo un contrato con el viajeOrganizado para ClienteB-------"
-clienteB generarContrato: viajeOr1 personas: 2 fecha: f4; generarContratoFlexible: viajeEsp1  personas: 2 fecha: f1. 
+clienteB generarContrato: viajeOr1 personas: 2 fecha: f4; generarContratoFlexible: viajeEsp1  personas: 2 fecha: f1.
 "Aclaracion: Esto lo hago debido a que cuando cree un contrato se fijara si tiene contratos con ViajeOrganizado dentro del lapso de un año. Pero lo genero porque de esta manera me aseguro que no por ser un cliente nuevo y contratar un Viaje Organizado sos ViajeroFrecuente, que para ser Frecuente al menos debas tener 1 viaje cualquiera.
 
 Recordar que si colCuotas esta vacia y la fecha actual supero la fecha_vto de contrato se considera efectivo."
