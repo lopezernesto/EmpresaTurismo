@@ -1,0 +1,40 @@
+|empresa clienteA clienteB f1 f2 f3 f4 fe_salida fe_vuelta viajeEsp1 viajeOr1 colEtapas etapa1 etapa2 act|
+"Inicializadores"
+empresa:= EmpresaTurismo crear.
+Contrato inicializarNroContrato .
+"-----Fechas-----"
+f1:= '2024-07-24' asDate.
+f2:=f1 addDays: 7.
+"------------Creo los clientes------------"
+clienteA := Cliente crear: '92812314' ape: 'Lopez' city: 'Cipolletti' correo: 'uncorreo@poo.com' tel: '2991' pref: nil.
+clienteB := ViajeroFrecuente  crear: '10293244' ape: 'Perez' city: 'Neuquen' correo: 'uncorreo1@poo.com' tel: '2992' pref: nil.
+empresa agregarCliente: clienteA; agregarCliente: clienteB.
+"-----Creo dos etapas para el ViajeOrganizado-----"
+
+act := 'No hay actividades programadas'.
+etapa1 := Etapa crear: act d_llegada: f1 elHotel: 'Miranda' pension: 'nil' dias: 3.
+etapa2 := Etapa crear: act  d_llegada: f2 elHotel: 'Comahue' pension: 'nil' dias: 3.
+colEtapas := OrderedCollection new.
+colEtapas add: etapa1; add: etapa2 .
+"-------Creo los viajes y los agrego a empresa-------"
+"Organizado con su colEtapas y agrego 2 jornadas"
+viajeOr1 := Organizado crear: 'Chocon' etapas: colEtapas imp: 50 costo: 100 cantPersonas: 30.
+viajeOr1 nuevaJornada: f1. "'nuevaJornada: ' dada una fecha crea la Jornada y la agrega a la coleccion"
+f3 := f1 addDays: 70.
+viajeOr1 nuevaJornada: f3.
+f4 := '2023-01-22' asDate. "Jornada vieja para el ClienteB (Frecuente)"
+viajeOr1 nuevaJornada: f4.
+
+"Especial"
+fe_salida:='2024-08-24' asDate.
+fe_vuelta := fe_salida addDays: 7.
+viajeEsp1 := Especial crear: 'Isla Jordan' f_salida: fe_salida ciudad: 'Cipolletti' f_vuelta: fe_vuelta  imp: 50 costo: 300 cantPersonas: 20.
+
+empresa agregarViaje: viajeEsp1 . empresa agregarViaje: viajeOr1.
+"-------Creo un contrato con el viajeOrganizado para ClienteB-------"
+clienteB generarContrato: viajeOr1 personas: 2 fecha: f4; generarContratoFlexible: viajeEsp1  personas: 2 fecha: f1. 
+"Aclaracion: Esto lo hago debido a que cuando cree un contrato se fijara si tiene contratos con ViajeOrganizado dentro del lapso de un año. Pero lo genero porque de esta manera me aseguro que no por ser un cliente nuevo y contratar un Viaje Organizado sos ViajeroFrecuente, que para ser Frecuente al menos debas tener 1 viaje cualquiera.
+
+Recordar que si colCuotas esta vacia y la fecha actual supero la fecha_vto de contrato se considera efectivo."
+
+VentanaPrincipal crearVentanaConEmpresa: empresa .
